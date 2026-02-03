@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRPG的MBTI診断</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- スタート画面 -->
+    <div id="start-screen" class="screen active">
+        <div class="container">
+            <h1>TRPG的MBTI診断</h1>
+            <p class="subtitle">あなたのTRPGプレイスタイルを診断します</p>
+            <div class="description">
+                <p>20の質問に答えることで、あなたのTRPGにおけるプレイヤータイプを診断します。</p>
+                <p>プレイヤー(PL)としての特徴とゲームマスター(GM)としての特徴の両方がわかります。</p>
+            </div>
+            <button class="btn-primary" onclick="app.startQuiz()">診断を始める</button>
+        </div>
+    </div>
+
+    <!-- 質問画面 -->
+    <div id="quiz-screen" class="screen">
+        <div class="container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="question-number" id="question-number"></div>
+            
+            <div class="question-card">
+                <h2 class="question-text" id="question-text"></h2>
+                
+                <div class="options">
+                    <button class="option-btn" data-value="3">
+                        <span class="option-label">A</span>
+                        <span class="option-text" id="option-a-text"></span>
+                    </button>
+                    <button class="option-btn" data-value="1">
+                        <span class="option-label">どちらかと言えばA</span>
+                        <span class="option-text-small" id="option-a-weak-text"></span>
+                    </button>
+                    <button class="option-btn" data-value="-1">
+                        <span class="option-label">どちらかと言えばB</span>
+                        <span class="option-text-small" id="option-b-weak-text"></span>
+                    </button>
+                    <button class="option-btn" data-value="-3">
+                        <span class="option-label">B</span>
+                        <span class="option-text" id="option-b-text"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 結果画面 -->
+    <div id="result-screen" class="screen">
+        <div class="container">
+            <div class="result-card">
+                <h1>診断結果</h1>
+                
+                <div class="type-header">
+                    <div class="type-code" id="type-code"></div>
+                    <div class="type-name" id="type-name"></div>
+                </div>
+
+                <div class="type-group" id="type-group"></div>
+
+                <div class="traits" id="traits"></div>
+
+                <div class="section">
+                    <h2>PLのあなた</h2>
+                    <div id="pl-description"></div>
+                </div>
+
+                <div class="section">
+                    <h2>GMのあなた</h2>
+                    <div id="gm-description"></div>
+                </div>
+
+                <div class="section">
+                    <h2>得意なプレイスタイル</h2>
+                    <div id="playstyle"></div>
+                </div>
+
+                <button class="btn-primary" onclick="app.restart()">もう一度診断する</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="questions.js"></script>
+    <script src="results.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

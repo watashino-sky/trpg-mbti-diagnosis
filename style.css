@@ -1,0 +1,316 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+/* スタート画面 */
+#start-screen h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #546e7a;
+    margin-bottom: 30px;
+}
+
+.description {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    border: 2px solid #e0e0e0;
+}
+
+.description p {
+    margin-bottom: 15px;
+    line-height: 1.8;
+    color: #333;
+}
+
+.description p:last-child {
+    margin-bottom: 0;
+}
+
+/* ボタン */
+.btn-primary {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 18px 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* 進捗バー */
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    width: 0;
+    transition: width 0.3s ease;
+}
+
+.question-number {
+    text-align: center;
+    font-size: 1rem;
+    color: #546e7a;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* 質問カード */
+.question-card {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border: 2px solid #e0e0e0;
+}
+
+.question-text {
+    font-size: 1.4rem;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* 選択肢 */
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.option-btn {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.option-btn:hover {
+    border-color: #667eea;
+    background: #f8f9ff;
+    transform: translateX(5px);
+}
+
+.option-label {
+    font-weight: bold;
+    color: #667eea;
+    min-width: 160px;
+    font-size: 0.95rem;
+}
+
+.option-text, .option-text-small {
+    color: #333;
+    flex: 1;
+    line-height: 1.5;
+}
+
+.option-text {
+    font-size: 1rem;
+}
+
+.option-text-small {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* 結果画面 */
+.result-card {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border: 2px solid #e0e0e0;
+}
+
+.result-card h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+.type-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 8px;
+    color: white;
+}
+
+.type-code {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    letter-spacing: 4px;
+}
+
+.type-name {
+    font-size: 1.5rem;
+}
+
+.type-group {
+    text-align: center;
+    padding: 15px;
+    margin-bottom: 20px;
+    background: #f8f9ff;
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+    color: #546e7a;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.traits {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.trait {
+    padding: 10px 20px;
+    background: #f8f9ff;
+    border: 2px solid #667eea;
+    border-radius: 20px;
+    color: #667eea;
+    font-weight: bold;
+    font-size: 0.95rem;
+}
+
+.section {
+    margin-bottom: 30px;
+    padding: 25px;
+    background: #f8f9ff;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+.section h2 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.section p {
+    color: #333;
+    line-height: 1.8;
+    margin-bottom: 10px;
+}
+
+.section ul {
+    margin-left: 20px;
+    color: #333;
+    line-height: 1.8;
+}
+
+.section li {
+    margin-bottom: 8px;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    #start-screen h1 {
+        font-size: 2rem;
+    }
+
+    .question-card {
+        padding: 25px;
+    }
+
+    .question-text {
+        font-size: 1.2rem;
+    }
+
+    .option-btn {
+        padding: 15px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .option-label {
+        min-width: auto;
+    }
+
+    .result-card {
+        padding: 25px;
+    }
+
+    .type-code {
+        font-size: 2.5rem;
+    }
+
+    .type-name {
+        font-size: 1.2rem;
+    }
+}

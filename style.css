@@ -1,3 +1,6 @@
+/* ============================================
+   リセット & 基本設定
+============================================ */
 * {
     margin: 0;
     padding: 0;
@@ -5,131 +8,219 @@
 }
 
 body {
-    font-family: 'Helvetica Neue', Arial, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic', 'Meiryo', sans-serif;
+    line-height: 1.6;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
-    padding: 20px;
+    color: #333;
+    overflow-x: hidden;
 }
 
+/* ============================================
+   共通スタイル
+============================================ */
 .container {
     max-width: 800px;
     margin: 0 auto;
+    padding: 20px;
 }
 
 .screen {
     display: none;
+    animation: fadeIn 0.5s ease-in;
 }
 
 .screen.active {
     display: block;
 }
 
-/* スタート画面 */
-#start-screen h1 {
-    text-align: center;
-    font-size: 2.5rem;
-    color: #2c3e50;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.subtitle {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #546e7a;
-    margin-bottom: 30px;
-}
-
-.description {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    margin-bottom: 30px;
-    border: 2px solid #e0e0e0;
-}
-
-.description p {
-    margin-bottom: 15px;
-    line-height: 1.8;
-    color: #333;
-}
-
-.description p:last-child {
-    margin-bottom: 0;
-}
-
-/* ボタン */
+/* ============================================
+   ボタンスタイル
+============================================ */
 .btn-primary {
-    display: block;
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 18px 40px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 1.2rem;
+    padding: 16px 48px;
+    font-size: 18px;
     font-weight: bold;
+    border-radius: 50px;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 25px rgba(240, 147, 251, 0.6);
 }
 
 .btn-primary:active {
     transform: translateY(0);
 }
 
-/* 進捗バー */
+/* ============================================
+   スタート画面
+============================================ */
+#start-screen {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+#start-screen h1 {
+    font-size: 48px;
+    color: white;
+    margin-bottom: 20px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+    animation: bounceIn 1s ease;
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.subtitle {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 40px;
+    font-weight: 500;
+}
+
+.description {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    animation: slideUp 0.8s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.description p {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #555;
+    line-height: 1.8;
+}
+
+.description p:last-child {
+    margin-bottom: 0;
+}
+
+/* TRPGアイコン風装飾 */
+#start-screen::before {
+    content: "🎲";
+    display: block;
+    font-size: 80px;
+    margin-bottom: 20px;
+    animation: rotate 3s ease-in-out infinite;
+}
+
+@keyframes rotate {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(15deg);
+    }
+}
+
+/* ============================================
+   質問画面
+============================================ */
+#quiz-screen {
+    padding: 40px 20px;
+}
+
 .progress-bar {
     width: 100%;
-    height: 10px;
-    background: rgba(255,255,255,0.3);
-    border-radius: 10px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
     overflow: hidden;
     margin-bottom: 20px;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-    width: 0;
-    transition: width 0.3s ease;
+    background: linear-gradient(90deg, #ffd89b 0%, #19547b 100%);
+    width: 0%;
+    transition: width 0.4s ease;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(255, 216, 155, 0.6);
 }
 
 .question-number {
     text-align: center;
-    font-size: 1rem;
-    color: #546e7a;
-    margin-bottom: 20px;
+    color: white;
+    font-size: 18px;
     font-weight: bold;
+    margin-bottom: 25px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* 質問カード */
 .question-card {
     background: white;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    border: 2px solid #e0e0e0;
+    padding: 40px 30px;
+    border-radius: 25px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+    animation: cardSlide 0.5s ease;
+}
+
+@keyframes cardSlide {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .question-text {
-    font-size: 1.4rem;
-    color: #2c3e50;
-    margin-bottom: 30px;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 35px;
     text-align: center;
+    font-weight: bold;
     line-height: 1.6;
 }
 
-/* 選択肢 */
 .options {
     display: flex;
     flex-direction: column;
@@ -137,180 +228,244 @@ body {
 }
 
 .option-btn {
-    background: white;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    border: none;
     padding: 20px;
+    border-radius: 15px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(252, 182, 159, 0.3);
     text-align: left;
-    display: flex;
-    align-items: center;
-    gap: 15px;
+}
+
+.option-btn:nth-child(1) {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+}
+
+.option-btn:nth-child(2) {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+}
+
+.option-btn:nth-child(3) {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+}
+
+.option-btn:nth-child(4) {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
 }
 
 .option-btn:hover {
-    border-color: #667eea;
-    background: #f8f9ff;
-    transform: translateX(5px);
+    transform: translateX(5px) scale(1.02);
+    box-shadow: 0 6px 25px rgba(252, 182, 159, 0.5);
+}
+
+.option-btn:active {
+    transform: scale(0.98);
 }
 
 .option-label {
+    display: block;
     font-weight: bold;
     color: #667eea;
-    min-width: 160px;
-    font-size: 0.95rem;
-}
-
-.option-text, .option-text-small {
-    color: #333;
-    flex: 1;
-    line-height: 1.5;
+    margin-bottom: 8px;
+    font-size: 16px;
 }
 
 .option-text {
-    font-size: 1rem;
+    display: block;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
 }
 
 .option-text-small {
-    font-size: 0.9rem;
-    color: #666;
+    display: block;
+    color: #555;
+    font-size: 14px;
 }
 
-/* 結果画面 */
+/* ============================================
+   結果画面
+============================================ */
+#result-screen {
+    padding: 40px 20px;
+}
+
 .result-card {
     background: white;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    border: 2px solid #e0e0e0;
+    padding: 40px 30px;
+    border-radius: 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: resultPop 0.6s ease;
+}
+
+@keyframes resultPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) rotate(-5deg);
+    }
+    50% {
+        transform: scale(1.05) rotate(2deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
 }
 
 .result-card h1 {
     text-align: center;
-    color: #2c3e50;
+    color: #667eea;
+    font-size: 32px;
     margin-bottom: 30px;
-    font-size: 2rem;
+    text-shadow: 2px 2px 4px rgba(102, 126, 234, 0.2);
 }
 
 .type-header {
     text-align: center;
-    margin-bottom: 20px;
-    padding: 20px;
+    margin-bottom: 30px;
+    padding: 30px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 8px;
-    color: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4);
 }
 
 .type-code {
-    font-size: 3rem;
+    font-size: 56px;
     font-weight: bold;
+    color: white;
+    letter-spacing: 8px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
     margin-bottom: 10px;
-    letter-spacing: 4px;
 }
 
 .type-name {
-    font-size: 1.5rem;
+    font-size: 28px;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: bold;
 }
 
 .type-group {
     text-align: center;
-    padding: 15px;
-    margin-bottom: 20px;
-    background: #f8f9ff;
-    border-radius: 8px;
-    border: 2px solid #e0e0e0;
-    color: #546e7a;
-    font-size: 1.1rem;
+    padding: 15px 30px;
+    border-radius: 50px;
     font-weight: bold;
+    margin-bottom: 25px;
+    color: white;
+    font-size: 18px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .traits {
     display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 30px;
     flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 35px;
 }
 
-.trait {
+.trait-badge {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    color: #333;
     padding: 10px 20px;
-    background: #f8f9ff;
-    border: 2px solid #667eea;
-    border-radius: 20px;
-    color: #667eea;
+    border-radius: 50px;
+    font-size: 14px;
     font-weight: bold;
-    font-size: 0.95rem;
+    box-shadow: 0 3px 10px rgba(252, 182, 159, 0.4);
 }
 
 .section {
-    margin-bottom: 30px;
+    margin-bottom: 35px;
     padding: 25px;
-    background: #f8f9ff;
-    border-radius: 8px;
-    border-left: 4px solid #667eea;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 20px;
+    border-left: 5px solid #667eea;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .section h2 {
-    color: #2c3e50;
+    color: #667eea;
+    font-size: 24px;
     margin-bottom: 15px;
-    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section h2::before {
+    content: "⭐";
+    font-size: 24px;
 }
 
 .section p {
-    color: #333;
+    margin-bottom: 15px;
+    color: #444;
     line-height: 1.8;
-    margin-bottom: 10px;
+}
+
+.section p:last-child {
+    margin-bottom: 0;
 }
 
 .section ul {
     margin-left: 20px;
-    color: #333;
-    line-height: 1.8;
+    color: #444;
 }
 
 .section li {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+    line-height: 1.6;
 }
 
-/* レスポンシブ対応 */
+/* ============================================
+   レスポンシブ
+============================================ */
 @media (max-width: 768px) {
-    body {
-        padding: 10px;
-    }
-
     #start-screen h1 {
-        font-size: 2rem;
-    }
-
-    .question-card {
-        padding: 25px;
+        font-size: 36px;
     }
 
     .question-text {
-        font-size: 1.2rem;
-    }
-
-    .option-btn {
-        padding: 15px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-
-    .option-label {
-        min-width: auto;
-    }
-
-    .result-card {
-        padding: 25px;
+        font-size: 20px;
     }
 
     .type-code {
-        font-size: 2.5rem;
+        font-size: 42px;
+        letter-spacing: 4px;
     }
 
     .type-name {
-        font-size: 1.2rem;
+        font-size: 22px;
+    }
+
+    .result-card h1 {
+        font-size: 26px;
+    }
+
+    .section h2 {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+
+    #start-screen h1 {
+        font-size: 28px;
+    }
+
+    .question-text {
+        font-size: 18px;
+    }
+
+    .type-code {
+        font-size: 36px;
+    }
+
+    .btn-primary {
+        padding: 14px 36px;
+        font-size: 16px;
     }
 }

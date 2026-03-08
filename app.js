@@ -1,160 +1,271 @@
-// アプリケーションのメイン処理
+// アプリケーションのメインロジック
 const app = {
-    currentQuestion: 0,
-    answers: {
-        EI: 0,  // 正の値=E, 負の値=I
-        SN: 0,  // 正の値=S, 負の値=N
-        TF: 0,  // 正の値=T, 負の値=F
-        JP: 0   // 正の値=J, 負の値=P
+    answers: {},
+    
+    init() {
+        this.renderQuestions();
+        this.setupEventListeners();
+        this.checkUrlParams();
     },
-
-    // 診断開始
-    startQuiz() {
-        this.currentQuestion = 0;
-        this.answers = { EI: 0, SN: 0, TF: 0, JP: 0 };
-        this.showScreen('quiz-screen');
-        this.displayQuestion();
-    },
-
-    // 画面切り替え
-    showScreen(screenId) {
-        document.querySelectorAll('.screen').forEach(screen => {
-            screen.classList.remove('active');
-        });
-        document.getElementById(screenId).classList.add('active');
-    },
-
-    // 質問を表示
-    displayQuestion() {
-        const question = questions[this.currentQuestion];
-        const progress = ((this.currentQuestion + 1) / questions.length) * 100;
-
-        // 進捗バーを更新
-        document.getElementById('progress-fill').style.width = progress + '%';
-        document.getElementById('question-number').textContent = 
-            `質問 ${this.currentQuestion + 1} / ${questions.length}`;
-
-        // 質問文を表示
-        document.getElementById('question-text').textContent = question.question;
-
-        // 選択肢を表示
-        document.getElementById('option-a-text').textContent = question.optionA;
-        document.getElementById('option-a-weak-text').textContent = question.optionA;
-        document.getElementById('option-b-weak-text').textContent = question.optionB;
-        document.getElementById('option-b-text').textContent = question.optionB;
-
-        // ボタンにイベントリスナーを設定
-        const buttons = document.querySelectorAll('.option-btn');
-        buttons.forEach(button => {
-            // 既存のリスナーを削除して再追加
-            const newButton = button.cloneNode(true);
-            button.parentNode.replaceChild(newButton, button);
-            
-            newButton.addEventListener('click', () => {
-                this.answerQuestion(parseInt(newButton.dataset.value));
-            });
-        });
-    },
-
-    // 回答を記録して次へ
-    answerQuestion(value) {
-        const question = questions[this.currentQuestion];
+    
+    // URLパラメータから結果を表示
+    checkUrlParams() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const type = urlParams.get('type');
         
-        // スコアを記録
-        this.answers[question.axis] += value;
-
-        // 次の質問へ
-        this.currentQuestion++;
-
-        if (this.currentQuestion < questions.length) {
-            this.displayQuestion();
-        } else {
-            this.showResult();
+        if (type && results[type]) {
+            // URLから直接結果表示
+            setTimeout(() => {
+                this.showResult(type);
+                document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+            }, 500);
         }
     },
-
-    // 結果を判定して表示
-    showResult() {
-        // タイプを判定
-        const type = this.determineType();
+    
+    // 質問を動的に生成
+    renderQuestions() {
+        const questionsSection = document.getElementById('questions');
+        
+        questions.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.innerHTML = `
+                <div class="question-header">
+                    <div class="question-number">${index + 1}</div>
+                    <div class="question-text">${q.question}</div>
+                </div>
+                <div class="question-options">
+                    <label class="option-label">
+                        <input type="radio" name="q${index}" value="3" data-axis="${q.axis}">
+                        <span class="option-text">A: ${q.optionA}</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q${index}" value="1" data-axis="${q.axis}">
+                        <span class="option-text">どちらかと言えばA</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q${index}" value="-1" data-axis="${q.axis}">
+                        <span class="option-text">どちらかと言えばB</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q${index}" value="-3" data-axis="${q.axis}">
+                        <span class="option-text">B: ${q.optionB}</span>
+                    </label>
+                </div>
+            `;
+            questionsSection.appendChild(card);
+        });
+        
+        // 診断ボタンを表示
+        document.getElementById('submit-section').style.display = 'block';
+    },
+    
+    // イベントリスナー設定
+    setupEventListeners() {
+        // ラジオボタンの選択
+        document.addEventListener('change', (e) => {
+            if (e.target.type === 'radio') {
+                // 選択されたlabelにクラスを追加
+                const labels = e.target.closest('.question-options').querySelectorAll('.option-label');
+                labels.forEach(label => label.classList.remove('selected'));
+                e.target.closest('.option-label').classList.add('selected');
+                
+                // 回答を保存
+                const questionIndex = parseInt(e.target.name.replace('q', ''));
+                this.answers[questionIndex] = {
+                    value: parseInt(e.target.value),
+                    axis: e.target.dataset.axis
+                };
+                
+                // すべて回答されているかチェック
+                this.checkAllAnswered();
+            }
+        });
+        
+        // 診断ボタン
+        document.getElementById('submit-btn').addEventListener('click', () => {
+            if (this.checkAllAnswered()) {
+                this.calculateResult();
+            }
+        });
+        
+        // 結果コピーボタン
+        document.getElementById('copy-result-btn').addEventListener('click', () => {
+            this.copyResultText();
+        });
+        
+        // URLコピーボタン
+        document.getElementById('copy-url-btn').addEventListener('click', () => {
+            this.copyResultUrl();
+        });
+        
+        // もう一度診断ボタン
+        document.getElementById('restart-btn').addEventListener('click', () => {
+            this.restart();
+        });
+    },
+    
+    // すべての質問に回答されているかチェック
+    checkAllAnswered() {
+        const allAnswered = Object.keys(this.answers).length === questions.length;
+        const warningText = document.getElementById('warning-text');
+        const submitBtn = document.getElementById('submit-btn');
+        
+        if (!allAnswered) {
+            warningText.style.display = 'block';
+            submitBtn.disabled = false; // ボタンは常に押せるようにする
+            return false;
+        } else {
+            warningText.style.display = 'none';
+            submitBtn.disabled = false;
+            return true;
+        }
+    },
+    
+    // 結果を計算
+    calculateResult() {
+        if (!this.checkAllAnswered()) {
+            alert('すべての質問に回答してください');
+            return;
+        }
+        
+        const scores = { EI: 0, SN: 0, TF: 0, JP: 0 };
+        
+        Object.values(this.answers).forEach(answer => {
+            scores[answer.axis] += answer.value;
+        });
+        
+        const type = 
+            (scores.EI > 0 ? 'E' : 'I') +
+            (scores.SN > 0 ? 'N' : 'S') +
+            (scores.TF > 0 ? 'F' : 'T') +
+            (scores.JP > 0 ? 'P' : 'J');
+        
+        this.showResult(type);
+    },
+    
+    // 結果を表示
+    showResult(type) {
         const result = results[type];
-
-        // 結果画面に切り替え
-        this.showScreen('result-screen');
-
-        // タイプコードと名前を表示
+        
+        if (!result) {
+            alert('結果の取得に失敗しました');
+            return;
+        }
+        
+        // 結果データを表示
         document.getElementById('type-code').textContent = type;
         document.getElementById('type-name').textContent = result.name;
-
-        // グループを表示
-        const groupElement = document.getElementById('type-group');
-        groupElement.textContent = result.group;
-        groupElement.style.borderColor = result.groupColor;
-
-        // 特性を表示
-        const traitsElement = document.getElementById('traits');
-        traitsElement.innerHTML = '';
+        
+        const typeGroup = document.getElementById('type-group');
+        typeGroup.textContent = result.group;
+        typeGroup.style.background = result.groupColor;
+        
+        // 特性バッジ
+        const traitsContainer = document.getElementById('traits');
+        traitsContainer.innerHTML = '';
         result.traits.forEach(trait => {
-            const traitSpan = document.createElement('span');
-            traitSpan.className = 'trait';
-            traitSpan.textContent = trait;
-            traitSpan.style.borderColor = result.groupColor;
-            traitSpan.style.color = result.groupColor;
-            traitsElement.appendChild(traitSpan);
+            const badge = document.createElement('div');
+            badge.className = 'trait-badge';
+            badge.textContent = trait;
+            traitsContainer.appendChild(badge);
         });
-
-        // 説明を表示
+        
+        // 説明文
         document.getElementById('pl-description').innerHTML = result.plDescription;
         document.getElementById('gm-description').innerHTML = result.gmDescription;
         document.getElementById('playstyle').innerHTML = result.playstyle;
-
-        // ヘッダーの背景色を設定
-        const typeHeader = document.querySelector('.type-header');
-        typeHeader.style.background = `linear-gradient(135deg, ${result.groupColor} 0%, ${this.adjustColor(result.groupColor, -20)} 100%)`;
+        
+        // 結果セクションを表示
+        document.getElementById('result').style.display = 'block';
+        
+        // 結果までスクロール
+        setTimeout(() => {
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+        
+        // URLを更新（履歴には追加しない）
+        const url = new URL(window.location);
+        url.searchParams.set('type', type);
+        window.history.replaceState({}, '', url);
     },
+    
+    // 結果テキストをコピー
+    copyResultText() {
+        const type = document.getElementById('type-code').textContent;
+        const result = results[type];
+        
+        const text = `【TRPG的MBTI診断結果】
 
-    // タイプを判定
-    determineType() {
-        let type = '';
+タイプ: ${type} - ${result.name}
+${result.group}
+
+特性: ${result.traits.join('・')}
+
+PLのあなた:
+${this.stripHtml(result.plDescription)}
+
+GMのあなた:
+${this.stripHtml(result.gmDescription)}
+
+診断はこちら: ${window.location.origin}${window.location.pathname}
+結果を見る: ${window.location.href}`;
         
-        // E/I
-        type += this.answers.EI >= 0 ? 'E' : 'I';
-        
-        // S/N
-        type += this.answers.SN >= 0 ? 'S' : 'N';
-        
-        // T/F
-        type += this.answers.TF >= 0 ? 'T' : 'F';
-        
-        // J/P
-        type += this.answers.JP >= 0 ? 'J' : 'P';
-        
-        return type;
+        this.copyToClipboard(text);
     },
-
-    // 色を調整（明るく/暗く）
-    adjustColor(color, amount) {
-        const hex = color.replace('#', '');
-        const num = parseInt(hex, 16);
-        
-        let r = (num >> 16) + amount;
-        let g = ((num >> 8) & 0x00FF) + amount;
-        let b = (num & 0x0000FF) + amount;
-        
-        r = Math.max(0, Math.min(255, r));
-        g = Math.max(0, Math.min(255, g));
-        b = Math.max(0, Math.min(255, b));
-        
-        return '#' + ((r << 16) | (g << 8) | b).toString(16).padStart(6, '0');
+    
+    // 結果URLをコピー
+    copyResultUrl() {
+        this.copyToClipboard(window.location.href);
     },
-
-    // 診断をやり直す
+    
+    // クリップボードにコピー
+    copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            const message = document.getElementById('copy-message');
+            message.style.display = 'block';
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 2000);
+        }).catch(err => {
+            alert('コピーに失敗しました');
+        });
+    },
+    
+    // HTMLタグを除去
+    stripHtml(html) {
+        const tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        return tmp.textContent || tmp.innerText || '';
+    },
+    
+    // リスタート
     restart() {
-        this.showScreen('start-screen');
+        // 回答をリセット
+        this.answers = {};
+        
+        // ラジオボタンをリセット
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.checked = false;
+        });
+        
+        // 選択クラスを削除
+        document.querySelectorAll('.option-label').forEach(label => {
+            label.classList.remove('selected');
+        });
+        
+        // 結果を非表示
+        document.getElementById('result').style.display = 'none';
+        
+        // URLをリセット
+        window.history.replaceState({}, '', window.location.pathname);
+        
+        // トップにスクロール
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 };
 
-// ページ読み込み時の初期化
+// アプリケーション開始
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('TRPG的MBTI診断 - 準備完了');
+    app.init();
 });

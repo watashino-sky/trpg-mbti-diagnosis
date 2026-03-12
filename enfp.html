@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENFP - 運動家 | TRPG的MBTI診断</title>
+    
+    <!-- OGPタグ -->
+    <meta property="og:title" content="ENFP - 運動家 | TRPG的MBTI診断">
+    <meta property="og:description" content="交流と即興から生まれる感情の流れを燃料に、物語をさらに盛り上げる立役者">
+    <meta property="og:image" content="https://trpg-mbti-diagnosis.netlify.app/images/ENFP.png">
+    <meta property="og:url" content="https://trpg-mbti-diagnosis.netlify.app/enfp.html">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ENFP - 運動家 | TRPG的MBTI診断">
+    <meta name="twitter:description" content="交流と即興から生まれる感情の流れを燃料に、物語をさらに盛り上げる立役者">
+    <meta name="twitter:image" content="https://trpg-mbti-diagnosis.netlify.app/images/ENFP.png">
+    
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .result-only-page { min-height: 100vh; background: #f5f7fa; padding: 40px 20px; }
+        .back-to-diagnosis { text-align: center; margin-bottom: 30px; }
+        .back-to-diagnosis .btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; display: inline-block; font-weight: bold; transition: all 0.3s ease; }
+        .back-to-diagnosis .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4); }
+    </style>
+</head>
+<body>
+    <div class="result-only-page">
+        <div class="container">
+            <div class="back-to-diagnosis">
+                <a href="index.html" class="btn">🎲 診断をやってみる</a>
+            </div>
+            
+            <section class="result-section" style="display: block;">
+                <h2 class="result-title">診断結果</h2>
+                
+                <div class="result-card">
+                    <div class="type-header">
+                        <div class="type-code">ENFP</div>
+                        <div class="type-name">運動家</div>
+                    </div>
+
+                    <div class="catchphrase-section">
+                        <div class="catchphrase-item">交流と即興から生まれる感情の流れを燃料に、物語をさらに盛り上げる立役者</div>
+                        <div class="catchphrase-item">積極的な交流でドラマを生み出し、今この瞬間の感情を繋ぎとめる火付け役</div>
+                        <div class="catchphrase-item">PLの自由な発想を歓迎し、予想外の展開から物語を精巧に組み上げるアーティスト</div>
+                    </div>
+
+                    <div class="type-group" style="background: #9b59b6;">外交官タイプ（NF型）</div>
+
+                    <div class="traits">
+                        <div class="trait-badge">外向型</div>
+                        <div class="trait-badge">直観型</div>
+                        <div class="trait-badge">感情型</div>
+                        <div class="trait-badge">知覚型</div>
+                    </div>
+
+                    <div class="result-content">
+                        <div class="section">
+                            <h3>PLのあなた</h3>
+                            <p>積極的な交流から情報を集め、そこから生まれるドラマや感情の流れを楽しむ。シナリオの想定ルートを外れても、PCの性格や交流から生まれる展開を物語として受け入れる。今この瞬間の交流と感情の積み重ねが、最高のセッション体験だと信じている。</p>
+                        </div>
+
+                        <div class="section">
+                            <h3>GMのあなた</h3>
+                            <p>世界観の骨子だけ握り、PLの自由な発想や予想外の展開を歓迎する。NPC・PC間の感情的なやり取りを重視し、そこから自然に生まれる物語を手繰り寄せる。計画より、プレイヤーが生み出した感動を大切にするGM。</p>
+                        </div>
+                    </div>
+
+                    <div class="share-section">
+                        <button onclick="copyUrl()" class="share-btn">URLをコピー</button>
+                        <p class="copy-message" id="copy-message" style="display: none;">コピーしました！</p>
+                    </div>
+
+                    <div class="back-to-diagnosis">
+                        <a href="index.html" class="btn">もう一度診断する</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        function copyUrl() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const message = document.getElementById('copy-message');
+                message.style.display = 'block';
+                setTimeout(() => message.style.display = 'none', 2000);
+            });
+        }
+    </script>
+</body>
+</html>

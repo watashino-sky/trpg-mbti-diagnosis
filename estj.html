@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESTJ - 幹部 | TRPG的MBTI診断</title>
+    
+    <!-- OGPタグ -->
+    <meta property="og:title" content="ESTJ - 幹部 | TRPG的MBTI診断">
+    <meta property="og:description" content="効率と秩序でセッションを前へ進める、組織的な推進役">
+    <meta property="og:image" content="https://trpg-mbti-diagnosis.netlify.app/images/ESTJ.png">
+    <meta property="og:url" content="https://trpg-mbti-diagnosis.netlify.app/estj.html">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ESTJ - 幹部 | TRPG的MBTI診断">
+    <meta name="twitter:description" content="効率と秩序でセッションを前へ進める、組織的な推進役">
+    <meta name="twitter:image" content="https://trpg-mbti-diagnosis.netlify.app/images/ESTJ.png">
+    
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .result-only-page { min-height: 100vh; background: #f5f7fa; padding: 40px 20px; }
+        .back-to-diagnosis { text-align: center; margin-bottom: 30px; }
+        .back-to-diagnosis .btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; display: inline-block; font-weight: bold; transition: all 0.3s ease; }
+        .back-to-diagnosis .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4); }
+    </style>
+</head>
+<body>
+    <div class="result-only-page">
+        <div class="container">
+            <div class="back-to-diagnosis">
+                <a href="index.html" class="btn">🎲 診断をやってみる</a>
+            </div>
+            
+            <section class="result-section" style="display: block;">
+                <h2 class="result-title">診断結果</h2>
+                
+                <div class="result-card">
+                    <div class="type-header">
+                        <div class="type-code">ESTJ</div>
+                        <div class="type-name">幹部</div>
+                    </div>
+
+                    <div class="catchphrase-section">
+                        <div class="catchphrase-item">効率と秩序でセッションを前へ進める、組織的な推進役</div>
+                        <div class="catchphrase-item">情報を整理してパーティを組織的に導き、効率よくゴールへ向かうリーダー</div>
+                        <div class="catchphrase-item">時間管理と明確なリターンで、達成感をプレイヤー全員に届ける運営の要</div>
+                    </div>
+
+                    <div class="type-group" style="background: #3498db;">番人タイプ（SJ型）</div>
+
+                    <div class="traits">
+                        <div class="trait-badge">外向型</div>
+                        <div class="trait-badge">感覚型</div>
+                        <div class="trait-badge">思考型</div>
+                        <div class="trait-badge">判断型</div>
+                    </div>
+
+                    <div class="result-content">
+                        <div class="section">
+                            <h3>PLのあなた</h3>
+                            <p>積極的に交流して情報を収集し、パーティを組織的に導きながら目標達成を目指す。開示された情報を整理し、段階的に謎を解いてゴールへ向かう推進力がある。効率的な進行と明確なリターンがこのPLの原動力。</p>
+                        </div>
+
+                        <div class="section">
+                            <h3>GMのあなた</h3>
+                            <p>情報を整理してプレイヤーが段階的に謎を解けるよう設計し、効率的な時間管理でセッションを運営する。明確なリターンを提示し、目標達成の達成感を全員に届けることを重視する。テキパキと進む頼れるGM。</p>
+                        </div>
+                    </div>
+
+                    <div class="share-section">
+                        <button onclick="copyUrl()" class="share-btn">URLをコピー</button>
+                        <p class="copy-message" id="copy-message" style="display: none;">コピーしました！</p>
+                    </div>
+
+                    <div class="back-to-diagnosis">
+                        <a href="index.html" class="btn">もう一度診断する</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        function copyUrl() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const message = document.getElementById('copy-message');
+                message.style.display = 'block';
+                setTimeout(() => message.style.display = 'none', 2000);
+            });
+        }
+    </script>
+</body>
+</html>

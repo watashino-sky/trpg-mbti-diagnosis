@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INTP - 論理学者 | TRPG的MBTI診断</title>
+    
+    <!-- OGPタグ -->
+    <meta property="og:title" content="INTP - 論理学者 | TRPG的MBTI診断">
+    <meta property="og:description" content="あらゆる可能性を検討し、世界の法則を解明したがる探求者">
+    <meta property="og:image" content="https://trpg-mbti-diagnosis.netlify.app/images/INTP.png">
+    <meta property="og:url" content="https://trpg-mbti-diagnosis.netlify.app/intp.html">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="INTP - 論理学者 | TRPG的MBTI診断">
+    <meta name="twitter:description" content="あらゆる可能性を検討し、世界の法則を解明したがる探求者">
+    <meta name="twitter:image" content="https://trpg-mbti-diagnosis.netlify.app/images/INTP.png">
+    
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .result-only-page { min-height: 100vh; background: #f5f7fa; padding: 40px 20px; }
+        .back-to-diagnosis { text-align: center; margin-bottom: 30px; }
+        .back-to-diagnosis .btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; display: inline-block; font-weight: bold; transition: all 0.3s ease; }
+        .back-to-diagnosis .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4); }
+    </style>
+</head>
+<body>
+    <div class="result-only-page">
+        <div class="container">
+            <div class="back-to-diagnosis">
+                <a href="index.html" class="btn">🎲 診断をやってみる</a>
+            </div>
+            
+            <section class="result-section" style="display: block;">
+                <h2 class="result-title">診断結果</h2>
+                
+                <div class="result-card">
+                    <div class="type-header">
+                        <div class="type-code">INTP</div>
+                        <div class="type-name">論理学者</div>
+                    </div>
+
+                    <div class="catchphrase-section">
+                        <div class="catchphrase-item">あらゆる可能性を検討し、世界の法則を解明したがる探求者</div>
+                        <div class="catchphrase-item">情報を徹底的に反芻し、最も論理的かつ独創的な答えを探し続ける思索者</div>
+                        <div class="catchphrase-item">論理的一貫性を保ちながら即興的に対応し、想定外の発想を引き出す触媒</div>
+                    </div>
+
+                    <div class="type-group" style="background: #8e44ad;">分析家タイプ（NT型）</div>
+
+                    <div class="traits">
+                        <div class="trait-badge">内向型</div>
+                        <div class="trait-badge">直観型</div>
+                        <div class="trait-badge">思考型</div>
+                        <div class="trait-badge">知覚型</div>
+                    </div>
+
+                    <div class="result-content">
+                        <div class="section">
+                            <h3>PLのあなた</h3>
+                            <p>情報を徹底的に反芻し、あらゆる可能性を検討しながら最も論理的な答えを探求する。リターンが明確な目標を定め、シナリオの構造を解析するように謎に向き合う。流れを外れても論理的整合性を重視し、世界法則の解明に知的喜びを覚える。</p>
+                        </div>
+
+                        <div class="section">
+                            <h3>GMのあなた</h3>
+                            <p>リターンが明確な導入を用意しつつ、プレイヤーの論理的発想や創意工夫を歓迎する。世界観はある程度ふんわり持ち、即興的対応で論理的一貫性を保ちながら進行する。「その発想はなかった」を引き出すのが好きなGM。</p>
+                        </div>
+                    </div>
+
+                    <div class="share-section">
+                        <button onclick="copyUrl()" class="share-btn">URLをコピー</button>
+                        <p class="copy-message" id="copy-message" style="display: none;">コピーしました！</p>
+                    </div>
+
+                    <div class="back-to-diagnosis">
+                        <a href="index.html" class="btn">もう一度診断する</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        function copyUrl() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const message = document.getElementById('copy-message');
+                message.style.display = 'block';
+                setTimeout(() => message.style.display = 'none', 2000);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFJ - 提唱者 | TRPG的MBTI診断</title>
+    
+    <!-- OGPタグ -->
+    <meta property="og:title" content="INFJ - 提唱者 | TRPG的MBTI診断">
+    <meta property="og:description" content="物語の全体像を俯瞰し、伏線と感情の収束を設計する職人">
+    <meta property="og:image" content="https://trpg-mbti-diagnosis.netlify.app/images/INFJ.png">
+    <meta property="og:url" content="https://trpg-mbti-diagnosis.netlify.app/infj.html">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="INFJ - 提唱者 | TRPG的MBTI診断">
+    <meta name="twitter:description" content="物語の全体像を俯瞰し、伏線と感情の収束を設計する職人">
+    <meta name="twitter:image" content="https://trpg-mbti-diagnosis.netlify.app/images/INFJ.png">
+    
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 結果専用ページのスタイル */
+        .result-only-page {
+            min-height: 100vh;
+            background: #f5f7fa;
+            padding: 40px 20px;
+        }
+        
+        .back-to-diagnosis {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .back-to-diagnosis .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-diagnosis .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="result-only-page">
+        <div class="container">
+            <!-- 診断ページへのリンク -->
+            <div class="back-to-diagnosis">
+                <a href="index.html" class="btn">🎲 診断をやってみる</a>
+            </div>
+            
+            <!-- 結果表示 -->
+            <section class="result-section" style="display: block;">
+                <h2 class="result-title">診断結果</h2>
+                
+                <div class="result-card">
+                    <div class="type-header">
+                        <div class="type-code">INFJ</div>
+                        <div class="type-name">提唱者</div>
+                    </div>
+
+                    <div class="catchphrase-section">
+                        <div class="catchphrase-item">物語の全体像を俯瞰し、伏線と感情の収束を設計する職人</div>
+                        <div class="catchphrase-item">情報を深く反芻し、感情と論理を統合して最善へ導く冷静な共感者</div>
+                        <div class="catchphrase-item">PCの感情が試される場面を戦略的に配置する、緻密な物語の建築家</div>
+                    </div>
+
+                    <div class="type-group" style="background: #9b59b6;">外交官タイプ（NF型）</div>
+
+                    <div class="traits">
+                        <div class="trait-badge">内向型</div>
+                        <div class="trait-badge">直観型</div>
+                        <div class="trait-badge">感情型</div>
+                        <div class="trait-badge">判断型</div>
+                    </div>
+
+                    <div class="result-content">
+                        <div class="section">
+                            <h3>PLのあなた</h3>
+                            <p>物語の全体像を俯瞰しながら、情報を深く反芻して最善の答えを導き出す。困っているキャラクターの感情に自然と寄り添い、心情の動きをセッションの軸に据える。仕込んだ伏線がクライマックスで回収される瞬間に最大の達成感を覚える。</p>
+                        </div>
+
+                        <div class="section">
+                            <h3>GMのあなた</h3>
+                            <p>世界観を完全に掌握した上で、PCの感情が試される場面を戦略的に配置する。それぞれのPCに用意した伏線が、クライマックスで美しく収束するよう緻密に設計する。プレイヤーが「この物語に参加してよかった」と感じる体験を目指す。</p>
+                        </div>
+                    </div>
+
+                    <!-- 共有セクション -->
+                    <div class="share-section">
+                        <button onclick="copyUrl()" class="share-btn">URLをコピー</button>
+                        <p class="copy-message" id="copy-message" style="display: none;">コピーしました！</p>
+                    </div>
+
+                    <div class="back-to-diagnosis">
+                        <a href="index.html" class="btn">もう一度診断する</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        function copyUrl() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const message = document.getElementById('copy-message');
+                message.style.display = 'block';
+                setTimeout(() => {
+                    message.style.display = 'none';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

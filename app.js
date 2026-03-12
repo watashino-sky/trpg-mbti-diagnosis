@@ -94,6 +94,11 @@ const app = {
             this.copyResultText();
         });
         
+        // 画像生成ボタン
+        document.getElementById('generate-image-btn').addEventListener('click', () => {
+            this.generateResultImage();
+        });
+        
         // URLコピーボタン
         document.getElementById('copy-url-btn').addEventListener('click', () => {
             this.copyResultUrl();
@@ -141,7 +146,8 @@ const app = {
             (scores.TF > 0 ? 'F' : 'T') +
             (scores.JP > 0 ? 'P' : 'J');
         
-        this.showResult(type);
+        // 専用ページへリダイレクト
+        window.location.href = `${type.toLowerCase()}.html`;
     },
     
     // 結果を表示
@@ -160,6 +166,18 @@ const app = {
         const typeGroup = document.getElementById('type-group');
         typeGroup.textContent = result.group;
         typeGroup.style.background = result.groupColor;
+        
+        // キャッチコピー
+        const catchphraseSection = document.getElementById('catchphrase-section');
+        if (result.catchphrases && result.catchphrases.length > 0) {
+            catchphraseSection.innerHTML = '';
+            result.catchphrases.forEach(phrase => {
+                const item = document.createElement('div');
+                item.className = 'catchphrase-item';
+                item.textContent = phrase;
+                catchphraseSection.appendChild(item);
+            });
+        }
         
         // 特性バッジ
         const traitsContainer = document.getElementById('traits');
@@ -212,6 +230,92 @@ ${this.stripHtml(result.gmDescription)}
 結果を見る: ${window.location.href}`;
         
         this.copyToClipboard(text);
+    },
+    
+    // 結果画像を生成
+    async generateResultImage() {
+        const type = document.getElementById('type-code').textContent;
+        const result = results[type];
+        
+        // Canvas作成
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = 800;
+        canvas.height = 600;
+        
+        // 背景
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // 枠線
+        ctx.strokeStyle = result.groupColor;
+        ctx.lineWidth = 8;
+        ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+        
+        // タイプコード
+        ctx.fillStyle = result.groupColor;
+        ctx.font = 'bold 72px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(type, canvas.width / 2, 120);
+        
+        // タイプ名
+        ctx.font = 'bold 36px sans-serif';
+        ctx.fillText(result.name, canvas.width / 2, 170);
+        
+        // キャッチコピー（最初の1つ）
+        ctx.fillStyle = '#333';
+        ctx.font = '20px sans-serif';
+        const catchphrase = result.catchphrases[0];
+        this.wrapText(ctx, catchphrase, canvas.width / 2, 230, canvas.width - 100, 28);
+        
+        // 特徴（3つ）
+        ctx.font = '18px sans-serif';
+        ctx.textAlign = 'left';
+        const features = [
+            result.catchphrases[0].substring(0, 30) + '...',
+            result.catchphrases[1].substring(0, 30) + '...',
+            result.catchphrases[2].substring(0, 30) + '...'
+        ];
+        
+        features.forEach((feature, index) => {
+            ctx.fillText(`• ${feature}`, 80, 340 + (index * 40));
+        });
+        
+        // URL
+        ctx.fillStyle = '#666';
+        ctx.font = '16px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(window.location.origin + window.location.pathname, canvas.width / 2, 550);
+        
+        // 画像をダウンロード
+        const dataUrl = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.download = `trpg-mbti-${type}.png`;
+        link.href = dataUrl;
+        link.click();
+    },
+    
+    // テキスト折り返し
+    wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+        const words = text.split('');
+        let line = '';
+        let testLine = '';
+        let currentY = y;
+        
+        for (let n = 0; n < words.length; n++) {
+            testLine = line + words[n];
+            const metrics = ctx.measureText(testLine);
+            const testWidth = metrics.width;
+            
+            if (testWidth > maxWidth && n > 0) {
+                ctx.fillText(line, x, currentY);
+                line = words[n];
+                currentY += lineHeight;
+            } else {
+                line = testLine;
+            }
+        }
+        ctx.fillText(line, x, currentY);
     },
     
     // 結果URLをコピー
